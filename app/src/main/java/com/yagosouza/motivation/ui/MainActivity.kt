@@ -1,5 +1,6 @@
 package com.yagosouza.motivation.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -22,14 +23,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
 
         supportActionBar?.hide()
-        handleUserName()
         handleFilter(R.id.image_all)
         handleNextPhrase()
 
+        setListeners()
+    }
+
+    private fun setListeners() {
         binding.buttonNewPhrase.setOnClickListener(this)
         binding.imageAll.setOnClickListener(this)
         binding.imageHappy.setOnClickListener(this)
         binding.imageSunny.setOnClickListener(this)
+        binding.textUserName.setOnClickListener(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        handleUserName()
     }
 
     private fun handleUserName() {
@@ -42,6 +53,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             handleNextPhrase()
         } else if (view.id in listOf(R.id.image_all, R.id.image_happy, R.id.image_sunny)) {
             handleFilter(view.id)
+        } else if (view.id == R.id.text_user_name) {
+            startActivity(Intent(this, UserActivity::class.java))
         }
     }
 
